@@ -162,7 +162,7 @@ public class Frequencer implements FrequencerInterface{
 	}
 	
 	for(int x=0;x<length;x++){
-		int  diff= mySpace[x+i]-myTarget[x+j];
+		int diff= mySpace[x+i]-myTarget[x+j];
 		if(diff>0){
 			return 1;
 		}else if(diff<0){
@@ -170,7 +170,7 @@ public class Frequencer implements FrequencerInterface{
 		}
 		
 	}
-    return 0;
+    	return 0;
     }
 
 
@@ -206,8 +206,7 @@ public class Frequencer implements FrequencerInterface{
 			}
 	}
 	return 0;
-	}                                 
-        //                                                                         
+	}                                                                                                        
         //このコードは変更しなければならない。          
     
 
@@ -241,7 +240,6 @@ public class Frequencer implements FrequencerInterface{
 			if(a==0 && b!=0){
 				return n+1;
 			}
-		
 	}                                    
         //                                                                   
     return 0;     // この行は変更しなければならない、       

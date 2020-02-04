@@ -68,7 +68,7 @@ public class Frequencer implements FrequencerInterface{
 	String  strj = new String(mySpace).substring(j);
 	int ret = stri.compareTo(strj);
 	if (ret > 0) return -1;
-	else if (ret < 0) return 1;
+    else if (ret < 0) return 1;
 	else return 0;
         //                                          
         //return 0; // この行は変更しなければいけない。 
@@ -157,21 +157,23 @@ public class Frequencer implements FrequencerInterface{
         // ここに比較のコードを書け 
         //
 	int length=Math.min(mySpace.length-i,k-j);
-	if(mySpace.length-i<k-j+1){
-		return -1;
-	}
 	
 	for(int x=0;x<length;x++){
-		int diff= mySpace[x+i]-myTarget[x+j];
-		if(diff>0){
-			return 1;
-		}else if(diff<0){
+		if(mySpace[x+i]<myTarget[x+j]){
 			return -1;
-		}
-		
-	}
-    	return 0;
+		}else if (mySpace[x+i]>myTarget[x+j]){
+            return 1;
+        }   
     }
+   
+    if(mySpace.length-i<k-j){
+		return -1;
+	}else{
+        return 0;
+    }
+    }
+
+
 
 
     private int subByteStartIndex(int start, int end) {
@@ -199,13 +201,14 @@ public class Frequencer implements FrequencerInterface{
         // if target_start_end is "Ho ", it will return 6.                
         //                                                                          
         // ここにコードを記述せよ。     
-	for(int n=0; n<suffixArray.length-1; n++){
-			int a = targetCompare(suffixArray[n],start,end);
-			if(a==0){
-				return n;
-			}
-	}
-	return 0;
+	for(int n=0; n<suffixArray.length; n++){
+        int a = targetCompare(suffixArray[n],start,end);
+        //System.out.println(suffixArray[n]);
+        if(a==0){
+            return n;
+        }
+    }
+    return 0;
 	}                                                                                                        
         //このコードは変更しなければならない。          
     
@@ -233,13 +236,13 @@ public class Frequencer implements FrequencerInterface{
         // Assuming the suffix array is created from "Hi Ho Hi Ho",          
         // if target_start_end is"i", it will return 9 for "Hi Ho Hi Ho".    
         //                                                                   
-        //　ここにコードを記述せよ        
-	for(int n=0; n<suffixArray.length-1; n++){
-			int a = targetCompare(suffixArray[n],start,end);
-			int b = targetCompare(suffixArray[n+1],start,end);
-			if(a==0 && b!=0){
-				return n+1;
-			}
+        //　ここにコードを記述せよ   
+ 
+	for(int n=suffixArray.length-1; n>0; n--){
+        int a = targetCompare(suffixArray[n],start,end);
+        if(a==0){
+            return n+1;
+        }
 	}                                    
         //                                                                   
     return 0;     // この行は変更しなければならない、       
@@ -276,14 +279,17 @@ public class Frequencer implements FrequencerInterface{
                A:o Hi Ho                     
             */
 
-            frequencerObject.setTarget(" ".getBytes());
+            frequencerObject.setTarget("H".getBytes());
+
+            System.out.println("START"+frequencerObject.subByteStartIndex(4, 5));
+            System.out.println("END"+frequencerObject.subByteEndIndex(4, 5));
             //                                         
             // ****  Please write code to check subByteStartIndex, and subByteEndIndex
             //
 
             int result = frequencerObject.frequency();
             System.out.print("Freq = "+ result+" ");
-            if(3 == result) { System.out.println("OK"); } else {System.out.println("WRONG"); }
+            if(4 == result) { System.out.println("OK"); } else {System.out.println("WRONG"); }
         }
         catch(Exception e) {
             e.printStackTrace();

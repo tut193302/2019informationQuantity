@@ -94,9 +94,36 @@ public class Frequencer implements FrequencerInterface{
 				suffixArray[m]=tmp;
 			}
 		}
-	}
+    }
+   //sort(suffixArray, 0, suffixArray.length-1);
         // 　順番はsuffixCompareで定義されるものとする。    
     }
+
+    /*public void sort(int[] array, int left, int right){
+        if(left <= right){
+            int p = right;
+            int left2 = left;
+            int right2 = right;
+            while(left2 <= right2){
+                while(suffixCompare(suffixArray[left2], suffixArray[p])== -1){
+                    left2++;
+                }
+                while(suffixCompare(suffixArray[right2], suffixArray[p])== 1){
+                    right2--;
+                }
+                if(left2 <= right2){
+                    int t = array[left2];
+                    array[left2] = array[right2];
+                    array[right2] = t;
+                    left2++;
+                    right2--;
+
+                }
+            }
+            sort(array, left, right2);
+            sort(array, left2, right);
+        }
+    }*/
 
     // Suffix Arrayを用いて、文字列の頻度を求めるコード
     // ここから、指定する範囲のコードは変更してはならない。

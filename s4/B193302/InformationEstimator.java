@@ -42,14 +42,15 @@ public class InformationEstimator implements InformationEstimatorInterface{
     }
 
     public double estimation(){
-	HashMap<String,Double> map = new HashMap<>();
+	//HashMap<String,Double> map = new HashMap<>();
 	boolean [] partition = new boolean[myTarget.length+1];
+	double [] partition2= new double[myTarget.length+1];
 	int np;
 	np = 1<<(myTarget.length-1);
 	// System.out.println("np="+np+" length="+myTarget.length);
 	double value = Double.MAX_VALUE; // value = mininimum of each "value1".
 
-	for(int p=0; p<np; p++) { // There are 2^(n-1) kinds of partitions.
+	/*for(int p=0; p<np; p++) { // There are 2^(n-1) kinds of partitions.
 	    // binary representation of p forms partition.
 	    // for partition {"ab" "cde" "fg"}
 	    // a b c d e f g   : myTarget
@@ -72,22 +73,38 @@ public class InformationEstimator implements InformationEstimatorInterface{
 		while(partition[end] == false) { 
 		     //System.out.write(myTarget[end]);
 		    end++;
-		}
+		}*/
 		//System.out.println("("+start+","+end+")");
-		myFrequencer.setTarget(subBytes(myTarget, start, end));
-		String key = new String(subBytes(myTarget, start, end));
+		for(int i; i < myTarget.length; i++){
+			for(int j; j < i; j++){
+				int start = j;
+				int end = i+1;
+				myFrequencer.setTarget(subBytes(myTarget, start, end));
+				value = iq(myFrequencer.Frequencer);
+				if(j==0){
+					partition2[i] = value;
+				}else{
+					partition2[i] = Math.min(partition2[i], partition2[j-1] + value);
+				}
+			}
+
+
+		} 
+		//myFrequencer.setTarget(subBytes(myTarget, start, end));
+
+		/*String key = new String(subBytes(myTarget, start, end));
 		if(!map.containsKey(key)){
 			map.put(key, iq(myFrequencer.frequency()));
 		}
 		value1 = value1 + map.get(key);
-		start = end;
-	    }
+		*/
+		
 	     //System.out.println(" "+ value1);
 
 	    // Get the minimal value in "value"
-	    if(value1 < value) value = value1;
-	}
-	return value;
+	    //if(value1 < value) value = value1;
+	
+	return partition2[myTarget.length-1];
     }
 /*    public double s(int num){
 	boolean z[] = new boolean[100];
